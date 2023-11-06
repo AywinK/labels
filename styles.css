@@ -5,3 +5,54 @@
     scroll-behavior: smooth;
 }
 
+
+.page {
+    width: 2480px;
+    height: 3508px;
+    padding-left: calc((7.2/210)*2480)px;
+    padding-right: calc((7.2/210)*2480)px;
+    padding-top: calc((15.1/297)*3508)px;
+    padding-bottom: calc((28/297)*3508)px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.label {
+    border: 0.1rem solid black;
+    width: calc(63.5/210*2480)px;
+    height: calc(29.6/297*3508)px;
+    padding: 10px;
+
+    display: grid;
+    gap: 5px;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+        "partNumber partNumber"
+        "van sheetNumber"
+        "edging location";
+}
+
+.partNumber {
+    grid-area: partNumber;
+}
+
+.van {
+    grid-area: van;
+}
+
+.sheetNumber {
+    grid-area: sheetNumber;
+}
+
+.edging {
+    grid-area: edging;
+}
+
+.location {
+    grid-area: location;
+}
