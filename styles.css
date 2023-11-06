@@ -57,11 +57,14 @@
         text-align: center;
         align-self: center;
         justify-self: center;
+        font-size: 48px;
     }
 }
 
 .partNumber {
     grid-area: partNumber;
+    font-weight: bold;
+    font-size: 72px;
 }
 
 .van {
