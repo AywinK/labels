@@ -60,6 +60,8 @@ document.addEventListener("paste", e => {
 
     const arrOfRowEl = arrOfRowsOfPartsObjHtml.map(labelsArr => createRowEl(labelsArr));
     console.log(arrOfRowEl);
+
+    const arrOfPageEl = arrOfPagesOfRows.map(rowsEl => createPageEl(rowsEl));
 });
 
 class Part {
