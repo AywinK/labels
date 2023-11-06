@@ -37,6 +37,10 @@ document.addEventListener("paste", e => {
     console.table(arrOfPartsObj);
     const arrOfPartsObjHtml = arrOfPartsObj.map(labelObj => labelObj.generateLabel());
     console.log(arrOfPartsObjHtml);
+
+    for (const el of arrOfPartsObjHtml) {
+        document.querySelector("body").appendChild(el);
+    }
 });
 
 class Part {
@@ -83,5 +87,5 @@ class Part {
 }
 
 
-const test = new Part(1, 2, 3, 4, 5).generateLabel();
-document.querySelector("#container").appendChild(test);
+// const test = new Part(1, 2, 3, 4, 5).generateLabel();
+// document.querySelector("#container").appendChild(test);
