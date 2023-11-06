@@ -49,20 +49,39 @@ class Part {
     }
 
     generateLabel() {
-        const htmlStr = `
-        <div class="label">
-        <span class="partNumber">${this.partNumber}</span>
-        <span class="van">${this.van}</span>
-        <span class="sheetNumber">${this.sheetNumber}</span>
-        <span class="edging">${this.edging}</span>
-        <span class="location">${this.location}</span>
-    </div>
-        `;
-        return htmlStr;
+        const labelEl = document.createElement("div");
+        labelEl.classList.add("label");
+
+        const partNumEl = document.createElement("span");
+        partNumEl.classList.add("partNumber");
+        partNumEl.innerText = `${this.partNumber}`;
+
+        const vanEl = document.createElement("span");
+        vanEl.classList.add("van");
+        vanEl.innerText = `${this.van}`;
+
+        const sheetNumEl = document.createElement("span");
+        sheetNumEl.classList.add("sheetNumber");
+        sheetNumEl.innerText = `${this.sheetNumber}`;
+
+        const edgingEl = document.createElement("span");
+        edgingEl.classList.add("edging");
+        edgingEl.innerText = `${this.edging}`;
+
+        const locationEl = document.createElement("span");
+        locationEl.classList.add("location");
+        locationEl.innerText = `${this.location}`;
+
+        labelEl.appendChild(partNumEl);
+        labelEl.appendChild(vanEl);
+        labelEl.appendChild(sheetNumEl);
+        labelEl.appendChild(edgingEl);
+        labelEl.appendChild(locationEl);
+
+        return labelEl;
     }
 }
 
 
 const test = new Part(1, 2, 3, 4, 5).generateLabel();
-console.log(document.querySelector("#container"));
-document.querySelector("container").innerHTML(test);
+document.querySelector("#container").appendChild(test);
