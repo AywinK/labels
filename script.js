@@ -26,7 +26,7 @@ document.addEventListener("paste", e => {
         tempArr.push(joinedArrFilteredEmptyStr[i + 2]);
         tempArr.push(joinedArrFilteredEmptyStr[i + 3]);
         tempArr.push(joinedArrFilteredEmptyStr[i + 4]);
-        arrOfParts.push(tempArr);
+        arrOfParts.push(tempArr.filter(el => (!!el)));
     }
 
     console.log(arrOfParts);
@@ -38,9 +38,28 @@ document.addEventListener("paste", e => {
     const arrOfPartsObjHtml = arrOfPartsObj.map(labelObj => labelObj.generateLabel());
     console.log(arrOfPartsObjHtml);
 
-    for (const el of arrOfPartsObjHtml) {
-        document.querySelector("body").appendChild(el);
+    const arrOfRowsOfPartsObjHtml = [];
+    for (let i = 0; i < arrOfPartsObjHtml.length; i += 3) {
+        let tempArr = [];
+        tempArr.push(arrOfPartsObjHtml[i]);
+        tempArr.push(arrOfPartsObjHtml[i + 1]);
+        tempArr.push(arrOfPartsObjHtml[i + 2]);
+        arrOfRowsOfPartsObjHtml.push(tempArr.filter(el => (!!el)));
     }
+    console.log(arrOfRowsOfPartsObjHtml);
+
+    const arrOfPagesOfRows = [];
+    for (let i = 0; i < arrOfRowsOfPartsObjHtml.length; i += 9) {
+        let tempArr = [];
+        for (let j = 0; j < 9; j++) {
+            tempArr.push(arrOfRowsOfPartsObjHtml[i + j]);
+        }
+        arrOfPagesOfRows.push(tempArr.filter(el => (!!el)));
+    }
+    console.log(arrOfPagesOfRows);
+
+    const arrOfRowEl = arrOfRowsOfPartsObjHtml.map(labelsArr => createRowEl(labelsArr));
+    console.log(arrOfRowEl);
 });
 
 class Part {
@@ -86,6 +105,21 @@ class Part {
     }
 }
 
+function createRowEl(arrOfThreeLabels) {
+    const rowEl = document.createElement("div");
+    for (const labelEl of arrOfThreeLabels) {
+        rowEl.appendChild(labelEl);
+    }
+    return rowEl;
+}
+
+function createPageEl(arrOfNineRows) {
+    const pageEl = document.createElement("div");
+    for (const rowEl of arrOfNineRows) {
+        pageEl.appendChild(rowEl);
+    }
+    return pageEl;
+}
 
 // const test = new Part(1, 2, 3, 4, 5).generateLabel();
 // document.querySelector("#container").appendChild(test);
