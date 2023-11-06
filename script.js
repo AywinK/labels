@@ -61,7 +61,20 @@ document.addEventListener("paste", e => {
     const arrOfRowEl = arrOfRowsOfPartsObjHtml.map(labelsArr => createRowEl(labelsArr));
     console.log(arrOfRowEl);
 
-    const arrOfPageEl = arrOfPagesOfRows.map(rowsEl => createPageEl(rowsEl));
+    const arrOfPagesOfRowsEl = [];
+    for (let i = 0; i < arrOfRowEl.length; i += 9) {
+        let tempArr = [];
+        for (let j = 0; j < 9; j++) {
+            tempArr.push(arrOfRowEl[i + j]);
+        }
+        arrOfPagesOfRowsEl.push(createPageEl(tempArr.filter(el => (!!el))));
+    }
+    console.log(arrOfPagesOfRowsEl);
+
+
+    for (let i = 0; i < arrOfPagesOfRowsEl.length; i++) {
+        document.querySelector("body").appendChild(arrOfPagesOfRowsEl[i]);
+    }
 });
 
 class Part {
@@ -109,16 +122,19 @@ class Part {
 
 function createRowEl(arrOfThreeLabels) {
     const rowEl = document.createElement("div");
+    rowEl.classList.add("row")
     for (const labelEl of arrOfThreeLabels) {
         rowEl.appendChild(labelEl);
     }
     return rowEl;
 }
 
-function createPageEl(arrOfNineRows) {
+function createPageEl(nodeArrOfNineRows) {
+    console.log(nodeArrOfNineRows);
     const pageEl = document.createElement("div");
-    for (const rowEl of arrOfNineRows) {
-        pageEl.appendChild(rowEl);
+    pageEl.classList.add("page")
+    for (let i = 0; i < nodeArrOfNineRows.length; i++) {
+        pageEl.appendChild(nodeArrOfNineRows[i]);
     }
     return pageEl;
 }
