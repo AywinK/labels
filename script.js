@@ -35,6 +35,8 @@ document.addEventListener("paste", e => {
         arrOfPartsObj.push(new Part(...arr));
     }
     console.table(arrOfPartsObj);
+    const arrOfPartsObjHtml = arrOfPartsObj.map(labelObj => labelObj.generateLabel());
+    console.log(arrOfPartsObjHtml);
 });
 
 class Part {
@@ -45,4 +47,22 @@ class Part {
         this.edging = partdetails[3];
         this.location = partdetails[4];
     }
+
+    generateLabel() {
+        const htmlStr = `
+        <div class="label">
+        <span class="partNumber">${this.partNumber}</span>
+        <span class="van">${this.van}</span>
+        <span class="sheetNumber">${this.sheetNumber}</span>
+        <span class="edging">${this.edging}</span>
+        <span class="location">${this.location}</span>
+    </div>
+        `;
+        return htmlStr;
+    }
 }
+
+
+const test = new Part(1, 2, 3, 4, 5).generateLabel();
+console.log(document.querySelector("#container"));
+document.querySelector("container").innerHTML(test);
