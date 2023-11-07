@@ -110,6 +110,10 @@ body {
     background-color: red;
 }
 
+.c {
+    background-color: yellow;
+}
+
 @media print {
     body {
         -webkit-print-color-adjust: exact;
