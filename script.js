@@ -124,6 +124,8 @@ class Part {
                 return "sp"
             case "N":
                 return "n"
+            case "T":
+                return "t"
             default:
                 return ""
         }

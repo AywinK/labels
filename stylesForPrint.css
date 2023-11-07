@@ -5,8 +5,8 @@
 }
 
 @page {
-    size: A4;
-    margin: 1cm;
+    size: auto;
+    margin: 0cm;
 }
 
 body {
@@ -18,7 +18,7 @@ body {
 .page {
     width: 100%;
     height: 100%;
-    padding: 1cm;
+    padding: 15.1mm 7.2mm;
     page-break-after: always;
     break-after: always;
 }
@@ -27,18 +27,24 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 5mm; /* Adjust the gap as needed */
+    gap: 2.55mm;
+    /* Adjust the gap as needed */
 }
 
 .label {
-    border: 0.1mm solid black; /* Use thin borders suitable for printing */
-    border-radius: 5mm; /* Rounded borders */
-    width: 70%; /* Adjust the width as needed */
-    height: 30%; /* Adjust the height as needed */
+    border: 0.1mm solid black;
+    /* Use thin borders suitable for printing */
+    border-radius: 5mm;
+    /* Rounded borders */
+    width: 63.5mm;
+    /* Adjust the width as needed */
+    height: 29.6mm;
+    /* Adjust the height as needed */
     padding: 5mm;
 
     display: grid;
-    gap: 3mm; /* Adjust the gap as needed */
+    gap: 0mm;
+    /* Adjust the gap as needed */
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
@@ -50,14 +56,16 @@ body {
         text-align: center;
         align-self: center;
         justify-self: center;
-        font-size: 10mm; /* Adjust the font size as needed */
+        font-size: 4.3mm;
+        /* Adjust the font size as needed */
     }
 }
 
 .partNumber {
     grid-area: partNumber;
     font-weight: bold;
-    font-size: 14mm; /* Adjust the font size as needed */
+    font-size: 7mm;
+    /* Adjust the font size as needed */
 }
 
 .van {
@@ -70,17 +78,49 @@ body {
 
 .edging {
     grid-area: edging;
-    padding: 3mm; /* Adjust the padding as needed */
+    padding: 1mm 2mm;
+    font-weight: 900;
+    border-radius: 1000px;
+
+    /* Adjust the padding as needed */
 }
 
 .location {
     grid-area: location;
 }
 
-/* Define your styles for the h, c, sm, sp, and n classes as needed for printing */
+.h {
+    background-color: red;
+
+}
+
+.c {
+    background-color: yellow;
+
+}
+
+.sm {
+    background-color: green;
+
+}
+
+.sp {
+    background-color: rgb(0, 140, 255);
+
+}
+
+.n {
+    background-color: whitesmoke;
+
+}
+
+.t {
+    background-color: orange;
+}
 
 @media print {
-    .h, .c, .sm, .sp, .n {
-        background-color: transparent; /* Remove background colors for printing */
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 }
