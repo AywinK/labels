@@ -5,8 +5,8 @@ document.addEventListener("paste", e => {
     const joinedArr = [];
     let str = "";
     for (data of dataArr) {
-        console.log(/\s/.test(data))
-        if (/\s/.test(data)) {
+        console.log(/\n/.test(data))
+        if (/\n/.test(data)) {
             joinedArr.push(str);
             str = "";
         } else {
@@ -16,18 +16,8 @@ document.addEventListener("paste", e => {
     joinedArr.push(str);
 
     console.log(joinedArr);
-    const joinedArrFilteredEmptyStr = joinedArr.filter(element => (element !== ""));
-    console.log(joinedArrFilteredEmptyStr);
-    const arrOfParts = [];
-    for (let i = 0; i < joinedArrFilteredEmptyStr.length; i += 5) {
-        let tempArr = [];
-        tempArr.push(joinedArrFilteredEmptyStr[i]);
-        tempArr.push(joinedArrFilteredEmptyStr[i + 1]);
-        tempArr.push(joinedArrFilteredEmptyStr[i + 2]);
-        tempArr.push(joinedArrFilteredEmptyStr[i + 3]);
-        tempArr.push(joinedArrFilteredEmptyStr[i + 4]);
-        arrOfParts.push(tempArr.filter(el => (!!el)));
-    }
+    const joinedArrFilteredEmptyStr = joinedArr.map(str => str.split(/\t/));
+    const arrOfParts = joinedArrFilteredEmptyStr.map(arr => arr.map(str => str.replace(/\r/, "")));
 
     console.log(arrOfParts);
     const arrOfPartsObj = [];
@@ -35,6 +25,14 @@ document.addEventListener("paste", e => {
         arrOfPartsObj.push(new Part(...arr));
     }
     console.table(arrOfPartsObj);
+    arrOfPartsObj.sort((a, b) => {
+        const edgeA = a.edging.toUpperCase();
+        const edgeB = b.edging.toUpperCase();
+
+        if (edgeA < edgeB) return -1;
+        if (edgeA > edgeB) return 1;
+        return 0;
+    });
     const arrOfPartsObjHtml = arrOfPartsObj.map(labelObj => labelObj.generateLabel());
     console.log(arrOfPartsObjHtml);
 
@@ -82,7 +80,7 @@ class Part {
         this.partNumber = partdetails[0];
         this.sheetNumber = partdetails[1];
         this.van = partdetails[2];
-        this.edging = partdetails[3];
+        this.edging = String(partdetails[3]).toUpperCase();
         this.location = partdetails[4];
     }
 
@@ -104,6 +102,10 @@ class Part {
 
         const edgingEl = document.createElement("span");
         edgingEl.classList.add("edging");
+        const hasValidEdging = this.addEdgingColour();
+        if (hasValidEdging) {
+            edgingEl.classList.add(this.addEdgingColour());
+        }
         edgingEl.innerText = `${this.edging}`;
 
         const locationEl = document.createElement("span");
@@ -117,6 +119,24 @@ class Part {
         labelEl.appendChild(locationEl);
 
         return labelEl;
+    }
+    addEdgingColour() {
+        switch (this.edging.toUpperCase()) {
+            case "H":
+                return "h"
+            case "C":
+                return "c"
+            case "SM":
+                return "sm"
+            case "SP":
+                return "sp"
+            case "N":
+                return "n"
+            case "T":
+                return "t"
+            default:
+                return ""
+        }
     }
 }
 
