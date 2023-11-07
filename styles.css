@@ -78,8 +78,39 @@
 
 .edging {
     grid-area: edging;
+    padding: 10px;
 }
 
 .location {
     grid-area: location;
+}
+
+.h {
+    background-color: red;
+    font-weight: 900;
+    border-radius: 1000px;
+}
+
+.c {
+    background-color: yellow;
+    font-weight: 900;
+    border-radius: 1000px;
+}
+
+.sm {
+    background-color: green;
+    font-weight: 900;
+    border-radius: 1000px;
+}
+
+.sp {
+    background-color: blue;
+    font-weight: 900;
+    border-radius: 1000px;
+}
+
+.n {
+    background-color: whitesmoke;
+    font-weight: 900;
+    border-radius: 1000px;
 }

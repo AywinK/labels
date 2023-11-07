@@ -72,7 +72,7 @@ class Part {
         this.partNumber = partdetails[0];
         this.sheetNumber = partdetails[1];
         this.van = partdetails[2];
-        this.edging = partdetails[3];
+        this.edging = String(partdetails[3]).toUpperCase();
         this.location = partdetails[4];
     }
 
@@ -94,6 +94,10 @@ class Part {
 
         const edgingEl = document.createElement("span");
         edgingEl.classList.add("edging");
+        const hasValidEdging = this.addEdgingColour();
+        if (hasValidEdging) {
+            edgingEl.classList.add(this.addEdgingColour());
+        }
         edgingEl.innerText = `${this.edging}`;
 
         const locationEl = document.createElement("span");
@@ -107,6 +111,22 @@ class Part {
         labelEl.appendChild(locationEl);
 
         return labelEl;
+    }
+    addEdgingColour() {
+        switch (this.edging.toUpperCase()) {
+            case "H":
+                return "h"
+            case "C":
+                return "c"
+            case "SM":
+                return "sm"
+            case "SP":
+                return "sp"
+            case "N":
+                return "n"
+            default:
+                return ""
+        }
     }
 }
 
