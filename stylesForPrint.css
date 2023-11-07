@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@page {
+    size: A4;
+    margin: 1cm;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    padding: 1cm;
+    page-break-after: always;
+    break-after: always;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5mm; /* Adjust the gap as needed */
+}
+
+.label {
+    border: 0.1mm solid black; /* Use thin borders suitable for printing */
+    border-radius: 5mm; /* Rounded borders */
+    width: 70%; /* Adjust the width as needed */
+    height: 30%; /* Adjust the height as needed */
+    padding: 5mm;
+
+    display: grid;
+    gap: 3mm; /* Adjust the gap as needed */
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+        "partNumber partNumber"
+        "van sheetNumber"
+        "edging location";
+
+    >* {
+        text-align: center;
+        align-self: center;
+        justify-self: center;
+        font-size: 10mm; /* Adjust the font size as needed */
+    }
+}
+
+.partNumber {
+    grid-area: partNumber;
+    font-weight: bold;
+    font-size: 14mm; /* Adjust the font size as needed */
+}
+
+.van {
+    grid-area: van;
+}
+
+.sheetNumber {
+    grid-area: sheetNumber;
+}
+
+.edging {
+    grid-area: edging;
+    padding: 3mm; /* Adjust the padding as needed */
+}
+
+.location {
+    grid-area: location;
+}
+
+/* Define your styles for the h, c, sm, sp, and n classes as needed for printing */
+
+@media print {
+    .h, .c, .sm, .sp, .n {
+        background-color: transparent; /* Remove background colors for printing */
+    }
+}
