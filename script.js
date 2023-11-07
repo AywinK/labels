@@ -25,6 +25,14 @@ document.addEventListener("paste", e => {
         arrOfPartsObj.push(new Part(...arr));
     }
     console.table(arrOfPartsObj);
+    arrOfPartsObj.sort((a, b) => {
+        const edgeA = a.edging.toUpperCase();
+        const edgeB = b.edging.toUpperCase();
+
+        if (edgeA < edgeB) return -1;
+        if (edgeA > edgeB) return 1;
+        return 0;
+    });
     const arrOfPartsObjHtml = arrOfPartsObj.map(labelObj => labelObj.generateLabel());
     console.log(arrOfPartsObjHtml);
 
