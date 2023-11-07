@@ -5,8 +5,8 @@ document.addEventListener("paste", e => {
     const joinedArr = [];
     let str = "";
     for (data of dataArr) {
-        console.log(/\s/.test(data))
-        if (/\s/.test(data)) {
+        console.log(/\n/.test(data))
+        if (/\n/.test(data)) {
             joinedArr.push(str);
             str = "";
         } else {
@@ -16,18 +16,8 @@ document.addEventListener("paste", e => {
     joinedArr.push(str);
 
     console.log(joinedArr);
-    const joinedArrFilteredEmptyStr = joinedArr.filter(element => (element !== ""));
-    console.log(joinedArrFilteredEmptyStr);
-    const arrOfParts = [];
-    for (let i = 0; i < joinedArrFilteredEmptyStr.length; i += 5) {
-        let tempArr = [];
-        tempArr.push(joinedArrFilteredEmptyStr[i]);
-        tempArr.push(joinedArrFilteredEmptyStr[i + 1]);
-        tempArr.push(joinedArrFilteredEmptyStr[i + 2]);
-        tempArr.push(joinedArrFilteredEmptyStr[i + 3]);
-        tempArr.push(joinedArrFilteredEmptyStr[i + 4]);
-        arrOfParts.push(tempArr.filter(el => (!!el)));
-    }
+    const joinedArrFilteredEmptyStr = joinedArr.map(str => str.split(/\t/));
+    const arrOfParts = joinedArrFilteredEmptyStr.map(arr => arr.map(str => str.replace(/\r/, "")));
 
     console.log(arrOfParts);
     const arrOfPartsObj = [];
