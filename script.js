@@ -16,7 +16,7 @@ document.addEventListener("paste", e => {
     joinedArr.push(str);
 
     console.log(joinedArr);
-    const joinedArrFilteredEmptyStr = joinedArr.map(str => str.split(/\t/));
+    const joinedArrFilteredEmptyStr = joinedArr.map(str => str.split(/\t+/));
     const arrOfParts = joinedArrFilteredEmptyStr.map(arr => arr.map(str => str.replace(/\r/, "")));
 
     console.log(arrOfParts);
