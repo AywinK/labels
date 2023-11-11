@@ -133,22 +133,27 @@
 </head>
 
 <body>    
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        // Assuming dataArr is an array that you want to send to the server
- document.querySelector("body").addEventListener("paste", (e) => {
-    e.preventDefault();
-    const dataArr = e.clipboardData.getData("text");
+document.querySelector("body").addEventListener("paste", e => {
+            // Assuming dataArr is an array that you want to send to the server
+            const dataArr = e.clipboardData.getData("text");
 
-// Make a POST request to localhost:3000
-axios.post('http://localhost:3000', { dataArr })
-    .then(response => {
-        console.log('Server response:', response.data);
-    })
-    .catch(error => {
-        console.error('Error making POST request:', error);
-    });
- })
+// Make a POST request to localhost:3000 using fetch
+fetch('http://localhost:3000', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ dataArr }),
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Server response:', data);
+})
+.catch(error => {
+    console.error('Error making POST request:', error);
+});
+})
     </script>
 </body>
 
