@@ -138,7 +138,7 @@ document.querySelector("body").addEventListener("paste", e => {
             const dataArr = e.clipboardData.getData("text");
 
 // Make a POST request to localhost:3000 using fetch
-fetch('http://localhost:3000', {
+fetch('https://labels-two.vercel.app/', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
