@@ -132,8 +132,24 @@
     <title>Labels</title>
 </head>
 
-<body>
-    <script src="./script.js"></script>
+<body>    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Assuming dataArr is an array that you want to send to the server
+ document.querySelector("body").addEventListener("paste", (e) => {
+    e.preventDefault();
+    const dataArr = e.clipboardData.getData("text");
+
+// Make a POST request to localhost:3000
+axios.post('http://localhost:3000', { dataArr })
+    .then(response => {
+        console.log('Server response:', response.data);
+    })
+    .catch(error => {
+        console.error('Error making POST request:', error);
+    });
+ })
+    </script>
 </body>
 
 </html>
