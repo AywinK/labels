@@ -90,8 +90,6 @@
             padding: 1mm 2mm;
             font-weight: 900;
             border-radius: 1000px;
-
-            @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
         }
 
         .sm {
@@ -133,26 +131,44 @@
 </head>
 <body>    
     <script>
-document.querySelector("body").addEventListener("paste", e => {
+        document.querySelector("body").addEventListener("paste", e => {
             // Assuming dataArr is an array that you want to send to the server
             const dataArr = e.clipboardData.getData("text");
 
-// Make a POST request to localhost:3000 using fetch
-fetch('https://labels-roan.vercel.app', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ dataArr }),
-})
-.then(response => response.json())
-.then(data => {
-    console.log('Server response:', data);
-})
-.catch(error => {
-    console.error('Error making POST request:', error);
-});
-})
+            // Make a POST request to localhost:3000 using fetch
+            fetch('https://labels-roan.vercel.app', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        dataArr
+                    }),
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a Blob URL for the downloaded PDF
+                    const url = URL.createObjectURL(blob);
+
+                    // Create an anchor element to trigger the download
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'labels.pdf';
+                    document.body.appendChild(a);
+
+                    // Trigger the click event on the anchor element
+                    a.click();
+
+                    // Remove the anchor element from the document
+                    document.body.removeChild(a);
+
+                    // Release the Blob URL
+                    URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('Error making POST request:', error);
+                });
+        })
     </script>
 </body>
 

@@ -5,12 +5,7 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 8080
 app.use(express.json());
-app.use(cors({
-    origin: "https://bejewelled-cheesecake-8cfe81.netlify.app",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    optionsSuccessStatus: 204,
-    credentials: true
-}));
+app.use(cors());
 
 
 class Part {
@@ -336,6 +331,7 @@ app.post('/', async (req, res) => {
 
     // Send the PDF as a response
     res.contentType('application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=labels.pdf');
     res.send(pdfBuffer);
 });
 
