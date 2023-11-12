@@ -305,7 +305,8 @@ app.post('/', async (req, res) => {
     // Send the PDF as a response
     res.contentType('application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=labels.pdf');
-    res.sendFile(pdfBuffer);
+    console.log(pdfBuffer)
+    res.send(pdfBuffer);
 });
 
 app.listen(port, () => {
