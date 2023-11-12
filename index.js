@@ -239,11 +239,9 @@ app.post('/', async (req, res) => {
     const dataArr = req.body.dataArr;
 
     //
-    console.log(dataArr);
     const joinedArr = [];
     let str = "";
     for (data of dataArr) {
-        console.log(/\n/.test(data))
         if (/\n/.test(data)) {
             joinedArr.push(str);
             str = "";
@@ -253,16 +251,13 @@ app.post('/', async (req, res) => {
     }
     joinedArr.push(str);
 
-    console.log(joinedArr);
     const joinedArrFilteredEmptyStr = joinedArr.map(str => str.split(/\t+/));
     const arrOfParts = joinedArrFilteredEmptyStr.map(arr => arr.map(str => str.replace(/\r/, "")));
 
-    console.log(arrOfParts);
     const arrOfPartsObj = [];
     for (const arr of arrOfParts) {
         arrOfPartsObj.push(new Part(...arr));
     }
-    console.table(arrOfPartsObj);
     arrOfPartsObj.sort((a, b) => {
         const edgeA = a.edging.toUpperCase();
         const edgeB = b.edging.toUpperCase();
@@ -272,7 +267,6 @@ app.post('/', async (req, res) => {
         return 0;
     });
     const arrOfPartsObjHtml = arrOfPartsObj.map(labelObj => labelObj.generateLabel());
-    console.log(arrOfPartsObjHtml);
 
     const arrOfRowsOfPartsObjHtml = [];
     for (let i = 0; i < arrOfPartsObjHtml.length; i += 3) {
@@ -282,7 +276,6 @@ app.post('/', async (req, res) => {
         tempArr.push(arrOfPartsObjHtml[i + 2]);
         arrOfRowsOfPartsObjHtml.push(createRowEl(tempArr.filter(el => (!!el))));
     }
-    console.log(arrOfRowsOfPartsObjHtml);
 
     const arrOfPagesOfRows = [];
     for (let i = 0; i < arrOfRowsOfPartsObjHtml.length; i += 9) {
@@ -292,29 +285,22 @@ app.post('/', async (req, res) => {
         }
         arrOfPagesOfRows.push(createPageEl(tempArr.filter(el => (!!el))));
     }
-    console.log(arrOfPagesOfRows);
 
-    const arrOfRowEl = arrOfRowsOfPartsObjHtml.map(labelsArr => createRowEl(labelsArr));
-    console.log(arrOfRowEl);
+    // const arrOfRowEl = arrOfRowsOfPartsObjHtml.map(labelsArr => createRowEl(labelsArr));
 
-    const arrOfPagesOfRowsEl = [];
-    for (let i = 0; i < arrOfRowEl.length; i += 9) {
-        let tempArr = [];
-        for (let j = 0; j < 9; j++) {
-            tempArr.push(arrOfRowEl[i + j]);
-        }
-        arrOfPagesOfRowsEl.push(createPageEl(tempArr.filter(el => (!!el))));
-    }
-    console.log(arrOfPagesOfRowsEl);
+    // const arrOfPagesOfRowsEl = [];
+    // for (let i = 0; i < arrOfRowEl.length; i += 9) {
+    //     let tempArr = [];
+    //     for (let j = 0; j < 9; j++) {
+    //         tempArr.push(arrOfRowEl[i + j]);
+    //     }
+    //     arrOfPagesOfRowsEl.push(createPageEl(tempArr.filter(el => (!!el))));
+    // }
 
-
-    for (let i = 0; i < arrOfPagesOfRowsEl.length; i++) {
-        page.setContent(arrOfPagesOfRowsEl[i].outerHTML);
-    }
+console.log("line300"+arrOfPagesOfRows)
     //
 
     // Your script goes here to generate HTML
-    const generatedHTML = await page.evaluate(() => {
 
         const fullHTML = `
             <!DOCTYPE html>
@@ -323,18 +309,139 @@ app.post('/', async (req, res) => {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Your PDF Title</title>
-                ${styles}
+                <style>
+                @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+                
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
+                @page {
+                    size: auto;
+                    margin: 0cm;
+                }
+                
+                body {
+                    width: 100%;
+                    height: 100%;
+                    font-family: "Roboto", Arial, sans-serif;
+                }
+                
+                .page {
+                    width: 100%;
+                    height: 100%;
+                    padding: 15.1mm 7.2mm;
+                    page-break-after: always;
+                    break-after: always;
+                }
+                
+                .row {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 2.55mm;
+                    /* Adjust the gap as needed */
+                }
+                
+                .label {
+                    border: 0mm solid black;
+                    /* Use thin borders suitable for printing */
+                    border-radius: 5mm;
+                    /* Rounded borders */
+                    width: 63.5mm;
+                    /* Adjust the width as needed */
+                    height: 29.6mm;
+                    /* Adjust the height as needed */
+                    padding: 5mm;
+                
+                    display: grid;
+                    gap: 0mm;
+                    /* Adjust the gap as needed */
+                    grid-template-rows: repeat(3, 1fr);
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-areas:
+                        "partNumber partNumber"
+                        "van sheetNumber"
+                        "edging location";
+                
+                    >* {
+                        text-align: center;
+                        align-self: center;
+                        justify-self: center;
+                        font-size: 4.3mm;
+                        /* Adjust the font size as needed */
+                    }
+                }
+                
+                .partNumber {
+                    grid-area: partNumber;
+                    font-weight: bold;
+                    font-size: 7mm;
+                    /* Adjust the font size as needed */
+                }
+                
+                .van {
+                    grid-area: van;
+                }
+                
+                .sheetNumber {
+                    grid-area: sheetNumber;
+                }
+                
+                .edging {
+                    grid-area: edging;
+                    padding: 1mm 2mm;
+                    font-weight: 900;
+                    border-radius: 1000px;
+                
+                    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+                }
+                
+                .sm {
+                    background-color: green;
+                
+                }
+                
+                .sp {
+                    background-color: rgb(0, 140, 255);
+                
+                }
+                
+                .n {
+                    background-color: whitesmoke;
+                    color: blue;
+                
+                }
+                
+                .t {
+                    background-color: orange;
+                }
+                
+                .h {
+                    background-color: red;
+                }
+                
+                .c {
+                    background-color: yellow;
+                }
+                
+                @media print {
+                    body {
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                }
+                </style>
             </head>
             <body>
-                ${arrOfPagesOfRowsEl.map(page => page.outerHTML).join('')}
+                ${arrOfPagesOfRows.join('')}
             </body>
             </html>
         `;
 
-        return fullHTML;
-    });
-
-    await page.setContent(generatedHTML);
+    await page.setContent(fullHTML, {timeout: 0});
 
     // Generate PDF
     const pdfBuffer = await page.pdf({ format: 'A4' });
