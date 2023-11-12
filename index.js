@@ -444,7 +444,7 @@ console.log("line300"+arrOfPagesOfRows)
     await page.setContent(fullHTML, {timeout: 0});
 
     // Generate PDF
-    const pdfBuffer = await page.pdf({ format: 'A4' });
+    const pdfBuffer = await page.pdf({ format: 'A4',printBackground: true  });
 
     await browser.close();
 
