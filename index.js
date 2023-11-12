@@ -18,40 +18,44 @@ class Part {
     }
 
     generateLabel() {
-        const labelEl = document.createElement("div");
-        labelEl.classList.add("label");
 
-        const partNumEl = document.createElement("span");
-        partNumEl.classList.add("partNumber");
-        partNumEl.innerText = `${this.partNumber}`;
+        return `<div class="label">
+        <span class="partNumber">${this.partNumber}</span><span class="van">${this.van}</span><span class="sheetNumber">${this.sheetNumber}</span><span class="edging ${this.addEdgingColour()}">${this.edging}</span><span class="location">${this.location}</span></div>`;
 
-        const vanEl = document.createElement("span");
-        vanEl.classList.add("van");
-        vanEl.innerText = `${this.van}`;
+        // const labelEl = document.createElement("div");
+        // labelEl.classList.add("label");
 
-        const sheetNumEl = document.createElement("span");
-        sheetNumEl.classList.add("sheetNumber");
-        sheetNumEl.innerText = `${this.sheetNumber}`;
+        // const partNumEl = document.createElement("span");
+        // partNumEl.classList.add("partNumber");
+        // partNumEl.innerText = `${this.partNumber}`;
 
-        const edgingEl = document.createElement("span");
-        edgingEl.classList.add("edging");
-        const hasValidEdging = this.addEdgingColour();
-        if (hasValidEdging) {
-            edgingEl.classList.add(this.addEdgingColour());
-        }
-        edgingEl.innerText = `${this.edging}`;
+        // const vanEl = document.createElement("span");
+        // vanEl.classList.add("van");
+        // vanEl.innerText = `${this.van}`;
 
-        const locationEl = document.createElement("span");
-        locationEl.classList.add("location");
-        locationEl.innerText = `${this.location}`;
+        // const sheetNumEl = document.createElement("span");
+        // sheetNumEl.classList.add("sheetNumber");
+        // sheetNumEl.innerText = `${this.sheetNumber}`;
 
-        labelEl.appendChild(partNumEl);
-        labelEl.appendChild(vanEl);
-        labelEl.appendChild(sheetNumEl);
-        labelEl.appendChild(edgingEl);
-        labelEl.appendChild(locationEl);
+        // const edgingEl = document.createElement("span");
+        // edgingEl.classList.add("edging");
+        // const hasValidEdging = this.addEdgingColour();
+        // if (hasValidEdging) {
+        //     edgingEl.classList.add(this.addEdgingColour());
+        // }
+        // edgingEl.innerText = `${this.edging}`;
 
-        return labelEl;
+        // const locationEl = document.createElement("span");
+        // locationEl.classList.add("location");
+        // locationEl.innerText = `${this.location}`;
+
+        // labelEl.appendChild(partNumEl);
+        // labelEl.appendChild(vanEl);
+        // labelEl.appendChild(sheetNumEl);
+        // labelEl.appendChild(edgingEl);
+        // labelEl.appendChild(locationEl);
+
+        // return labelEl;
     }
     addEdgingColour() {
         switch (this.edging.toUpperCase()) {
@@ -73,23 +77,29 @@ class Part {
     }
 }
 
-function createRowEl(arrOfThreeLabels) {
-    const rowEl = document.createElement("div");
-    rowEl.classList.add("row")
-    for (const labelEl of arrOfThreeLabels) {
-        rowEl.appendChild(labelEl);
-    }
-    return rowEl;
+function createRowEl(...arrOfThreeLabels) {
+
+    return `<div class="row">${arrOfThreeLabels.map(label => label)}</div>`
+
+    // const rowEl = document.createElement("div");
+    // rowEl.classList.add("row")
+    // for (const labelEl of arrOfThreeLabels) {
+    //     rowEl.appendChild(labelEl);
+    // }
+    // return rowEl;
 }
 
-function createPageEl(nodeArrOfNineRows) {
-    console.log(nodeArrOfNineRows);
-    const pageEl = document.createElement("div");
-    pageEl.classList.add("page")
-    for (let i = 0; i < nodeArrOfNineRows.length; i++) {
-        pageEl.appendChild(nodeArrOfNineRows[i]);
-    }
-    return pageEl;
+function createPageEl(...arrOfNineRows) {
+
+    return `<div class="page">${arrOfNineRows.map(row => row)}</div>`
+
+    // console.log(nodeArrOfNineRows);
+    // const pageEl = document.createElement("div");
+    // pageEl.classList.add("page")
+    // for (let i = 0; i < nodeArrOfNineRows.length; i++) {
+    //     pageEl.appendChild(nodeArrOfNineRows[i]);
+    // }
+    // return pageEl;
 }
 
 
