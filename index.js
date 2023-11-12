@@ -234,8 +234,6 @@ body {
 
 // Convert HTML to PDF route
 app.post('/', async (req, res) => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
     const dataArr = req.body.dataArr;
 
     //
@@ -297,12 +295,11 @@ app.post('/', async (req, res) => {
     //     arrOfPagesOfRowsEl.push(createPageEl(tempArr.filter(el => (!!el))));
     // }
 
-console.log("line300"+arrOfPagesOfRows)
     //
 
     // Your script goes here to generate HTML
 
-        const fullHTML = `
+    const fullHTML = `
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -440,11 +437,12 @@ console.log("line300"+arrOfPagesOfRows)
             </body>
             </html>
         `;
-
-    await page.setContent(fullHTML, {timeout: 0});
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(fullHTML, { timeout: 0 });
 
     // Generate PDF
-    const pdfBuffer = await page.pdf({ format: 'A4',printBackground: true  });
+    const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
 
     await browser.close();
 
