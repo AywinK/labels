@@ -7,7 +7,9 @@ const port = process.env.PORT || 8080
 app.use(express.json());
 app.use(cors({
     origin: "https://bejewelled-cheesecake-8cfe81.netlify.app",
-    optionsSuccessStatus: 200,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    optionsSuccessStatus: 204,
+    credentials: true
 }));
 
 
