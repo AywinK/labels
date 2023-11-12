@@ -9,11 +9,11 @@
 
 <body>
     <script>
-        let url = 'https://labels-roan.vercel.app/';
-        document.querySelector("body").addEventListener("paste", e => {
+        var url = 'https://labels-roan.vercel.app/';
+        document.querySelector("body").addEventListener("paste", function (e) {
             console.log("pasting")
             // Assuming dataArr is an array that you want to send to the server
-            const dataArr = e.clipboardData.getData("text");
+            var dataArr = e.clipboardData.getData("text");
 
             // Make a POST request to localhost:3000 using fetch
             fetch(url, {
@@ -25,14 +25,14 @@
                     dataArr
                 }),
             })
-                .then(response => response.text())
-                .then((html) => {
+                .then(function (response) { return response.text() })
+                .then(function (html) {
 
                     document.body.innerHTML = html;
                     url = "";
 
                 })
-                .catch(error => {
+                .catch(function (error) {
                     console.error('Error making POST request:', error);
                 });
         })
