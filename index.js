@@ -1,5 +1,4 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
 const cors = require("cors");
 
 const app = express();
@@ -293,20 +292,10 @@ app.post('/', async (req, res) => {
             </body>
             </html>
         `;
-    const browser = await puppeteer.launch({ headless: "new" });
-    const page = await browser.newPage();
-    await page.setContent(fullHTML, { timeout: 0 });
 
-    // Generate PDF
-    const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
+    res.contentType('text/html');
 
-    await browser.close();
-
-    // Send the PDF as a response
-    res.contentType('application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=labels.pdf');
-    console.log(pdfBuffer)
-    res.send(pdfBuffer);
+    res.send(fullHTML);
 });
 
 app.listen(port, () => {

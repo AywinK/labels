@@ -24,22 +24,11 @@
                     dataArr
                 }),
             })
-                .then(response => response.blob())
-                .then(blob => {
-                    // Create a Blob URL for the embedded PDF
-                    console.log("line30" + blob);
-                    // const url = 
-                    // console.log(url);
+                .then(response => response.text())
+                .then((html) => {
 
-                    // Create an embed element to display the PDF
-                    const embed = document.createElement('embed');
-                    embed.src = URL.createObjectURL(blob);
-                    embed.type = 'application/pdf';
-                    embed.width = '100%';
-                    embed.height = '1000';
+                    document.body.innerHTML = html;
 
-                    // Append the embed element to the body
-                    document.querySelector("body").replaceChildren(embed);
                 })
                 .catch(error => {
                     console.error('Error making POST request:', error);
