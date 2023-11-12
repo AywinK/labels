@@ -79,7 +79,7 @@ class Part {
 
 function createRowEl(...arrOfThreeLabels) {
 
-    return `<div class="row">${arrOfThreeLabels.map(label => label)}</div>`
+    return `<div class="row">${arrOfThreeLabels.join("")}</div>`
 
     // const rowEl = document.createElement("div");
     // rowEl.classList.add("row")
@@ -91,7 +91,7 @@ function createRowEl(...arrOfThreeLabels) {
 
 function createPageEl(...arrOfNineRows) {
 
-    return `<div class="page">${arrOfNineRows.map(row => row)}</div>`
+    return `<div class="page">${arrOfNineRows.join("")}</div>`
 
     // console.log(nodeArrOfNineRows);
     // const pageEl = document.createElement("div");
@@ -280,7 +280,7 @@ app.post('/', async (req, res) => {
         tempArr.push(arrOfPartsObjHtml[i]);
         tempArr.push(arrOfPartsObjHtml[i + 1]);
         tempArr.push(arrOfPartsObjHtml[i + 2]);
-        arrOfRowsOfPartsObjHtml.push(tempArr.filter(el => (!!el)));
+        arrOfRowsOfPartsObjHtml.push(createRowEl(tempArr.filter(el => (!!el))));
     }
     console.log(arrOfRowsOfPartsObjHtml);
 
@@ -290,7 +290,7 @@ app.post('/', async (req, res) => {
         for (let j = 0; j < 9; j++) {
             tempArr.push(arrOfRowsOfPartsObjHtml[i + j]);
         }
-        arrOfPagesOfRows.push(tempArr.filter(el => (!!el)));
+        arrOfPagesOfRows.push(createPageEl(tempArr.filter(el => (!!el))));
     }
     console.log(arrOfPagesOfRows);
 
