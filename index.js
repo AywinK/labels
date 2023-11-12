@@ -228,9 +228,8 @@ app.post('/', async (req, res) => {
     const page = await browser.newPage();
     const dataArr = req.body.dataArr;
 
-    // Your script goes here to generate HTML
-    const generatedHTML = await page.evaluate(() => {
-        console.log(dataArr);
+    //
+    console.log(dataArr);
     const joinedArr = [];
     let str = "";
     for (data of dataArr) {
@@ -302,9 +301,12 @@ app.post('/', async (req, res) => {
     for (let i = 0; i < arrOfPagesOfRowsEl.length; i++) {
         page.setContent(arrOfPagesOfRowsEl[i].outerHTML);
     }
+    //
 
+    // Your script goes here to generate HTML
+    const generatedHTML = await page.evaluate(() => {
 
-    const fullHTML = `
+        const fullHTML = `
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -318,7 +320,7 @@ app.post('/', async (req, res) => {
             </body>
             </html>
         `;
-        
+
         return fullHTML;
     });
 
