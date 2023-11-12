@@ -9,13 +9,14 @@
 
 <body>
     <script>
+        let url = 'https://labels-roan.vercel.app/';
         document.querySelector("body").addEventListener("paste", e => {
             console.log("pasting")
             // Assuming dataArr is an array that you want to send to the server
             const dataArr = e.clipboardData.getData("text");
 
             // Make a POST request to localhost:3000 using fetch
-            fetch('https://labels-roan.vercel.app/', {
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -28,6 +29,7 @@
                 .then((html) => {
 
                     document.body.innerHTML = html;
+                    url = "";
 
                 })
                 .catch(error => {
