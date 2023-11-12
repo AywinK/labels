@@ -15,29 +15,31 @@
             const dataArr = e.clipboardData.getData("text");
 
             // Make a POST request to localhost:3000 using fetch
-            fetch('https://labels-roan.vercel.app', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        dataArr
-                    }),
-                })
+            fetch('https://labels-roan.vercel.app/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    dataArr
+                }),
+            })
                 .then(response => response.blob())
                 .then(blob => {
                     // Create a Blob URL for the embedded PDF
-                    const url = URL.createObjectURL(blob);
+                    console.log("line30" + blob);
+                    // const url = 
+                    // console.log(url);
 
                     // Create an embed element to display the PDF
                     const embed = document.createElement('embed');
-                    embed.src = url;
+                    embed.src = URL.createObjectURL(blob);
                     embed.type = 'application/pdf';
                     embed.width = '100%';
-                    embed.height = '100%';
+                    embed.height = '1000';
 
                     // Append the embed element to the body
-                    document.body.appendChild(embed);
+                    document.querySelector("body").replaceChildren(embed);
                 })
                 .catch(error => {
                     console.error('Error making POST request:', error);
