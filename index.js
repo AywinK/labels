@@ -79,7 +79,7 @@ class Part {
 
 function createRowEl(...arrOfThreeLabels) {
 
-    return `<div class="row">${arrOfThreeLabels.join("")}</div>`
+    return `<div class="row">${arrOfThreeLabels.join("")}</div>`.replace(/,/g, "")
 
     // const rowEl = document.createElement("div");
     // rowEl.classList.add("row")
@@ -91,7 +91,7 @@ function createRowEl(...arrOfThreeLabels) {
 
 function createPageEl(...arrOfNineRows) {
 
-    return `<div class="page">${arrOfNineRows.join("")}</div>`
+    return `<div class="page">${arrOfNineRows.join("")}</div>`.replace(/,/g, "")
 
     // console.log(nodeArrOfNineRows);
     // const pageEl = document.createElement("div");
@@ -437,7 +437,7 @@ app.post('/', async (req, res) => {
             </body>
             </html>
         `;
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: "new" });
     const page = await browser.newPage();
     await page.setContent(fullHTML, { timeout: 0 });
 
