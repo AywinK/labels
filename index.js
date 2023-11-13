@@ -328,6 +328,11 @@ app.post('/', async (req, res) => {
     // res.send(fullHTML);
 });
 
+app.get("/", (req, res) => {
+    const fileContent = fs.readFileSync("/tmp/labels.pdf");
+    res.send(fileContent);
+})
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
