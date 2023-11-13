@@ -1,4 +1,5 @@
 const express = require('express');
+const puppeteer = require('puppeteer');
 const cors = require("cors");
 const puppeteer = require("puppeteer");
 const fs = require("fs");
@@ -296,36 +297,9 @@ app.post('/', async (req, res) => {
             </html>
         `;
 
-    // res.contentType('text/html');
+    res.contentType('text/html');
 
-    const browser = await puppeteer.launch({ headless: "new" });
-    const page = await browser.newPage();
-
-    await page.setContent(fullHTML);
-    const pdfBuffer = await page.pdf({ format: "A4" });
-    await browser.close();
-
-    const tmpFolderPath = "/tmp";
-    let writeStream = fs.createWriteStream(tmpFolderPath + "/labels.pdf");
-    writeStream.on("finish", function () {
-        const fileContent = fs.readFileSync("/tmp/labels.pdf");
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename=labels.pdf`);
-        res.send(fileContent);
-
-    })
-    // const pdfFilePath = path.join(tmpFolderPath, "labels.pdf");
-    // fs.writeFileSync(pdfFilePath, pdfBuffer);
-
-    // Set the response headers
-    // res.setHeader('Content-Type', 'application/pdf');
-    // res.setHeader('Content-Disposition', `attachment; filename=labels.pdf`);
-
-    // Send the PDF buffer
-    // res.send(pdfFilePath);
-
-    // res.send(fullHTML);
+    res.send(fullHTML);
 });
 
 app.get("/", (req, res) => {
