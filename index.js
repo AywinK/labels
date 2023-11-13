@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require("cors");
-import puppeteer from 'puppeteer';
+const puppeteer = require("puppeteer");
 const fs = require("fs");
-import path from 'path';
+const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 8080
@@ -298,7 +298,7 @@ app.post('/', async (req, res) => {
 
     // res.contentType('text/html');
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
     await page.setContent(fullHTML);
@@ -306,15 +306,24 @@ app.post('/', async (req, res) => {
     await browser.close();
 
     const tmpFolderPath = "/tmp";
-    const pdfFilePath = path.join(tmpFolderPath, "labels.pdf");
-    fs.writeFileSync(pdfFilePath, pdfBuffer);
+    let writeStream = fs.createWriteStream(tmpFolderPath + "/labels.pdf");
+    writeStream.on("finish", function () {
+        const fileContent = fs.readFileSync("/tmp/labels.pdf");
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename=labels.pdf`);
+        res.send(fileContent);
+
+    })
+    // const pdfFilePath = path.join(tmpFolderPath, "labels.pdf");
+    // fs.writeFileSync(pdfFilePath, pdfBuffer);
 
     // Set the response headers
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename=labels.pdf`);
+    // res.setHeader('Content-Type', 'application/pdf');
+    // res.setHeader('Content-Disposition', `attachment; filename=labels.pdf`);
 
     // Send the PDF buffer
-    res.send(pdfFilePath);
+    // res.send(pdfFilePath);
 
     // res.send(fullHTML);
 });
