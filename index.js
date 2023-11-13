@@ -298,7 +298,7 @@ app.post('/', async (req, res) => {
 
     // res.contentType('text/html');
 
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: "new" });
     const page = await browser.newPage();
 
     await page.setContent(fullHTML);
