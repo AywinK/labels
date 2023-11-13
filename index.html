@@ -9,7 +9,9 @@
 
 <body>
     <script>
-        document.querySelector("body").addEventListener("paste", function (e) {
+        let url = 'https://labels-roan.vercel.app/';
+        document.querySelector("body").addEventListener("paste", e => {
+            console.log("pasting")
             // Assuming dataArr is an array that you want to send to the server
             const dataArr = e.clipboardData.getData("text");
 
@@ -23,27 +25,12 @@
                     dataArr
                 }),
             })
-                .then(response => response.blob())
-                .then(blob => {
-                    // Create a Blob URL for the embedded PDF
-                    const url = window.URL.createObjectURL(blob);
+                .then(function (response) { return response.text() })
+                .then(function (html) {
 
-                    // Create an anchor element to trigger the download
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'labels.pdf';
+                    document.body.innerHTML = html;
+                    url = "";
 
-                    // Append the anchor element to the body
-                    document.body.appendChild(a);
-
-                    // Trigger the click event on the anchor element
-                    a.click();
-
-                    // Remove the anchor element from the document
-                    document.body.removeChild(a);
-
-                    // Release the Blob URL
-                    window.URL.revokeObjectURL(url);
                 })
                 .catch(error => {
                     console.error('Error making POST request:', error);
