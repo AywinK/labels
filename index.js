@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require("cors");
+import puppeteer from 'puppeteer';
+const fs = require("fs");
+import path from 'path';
 
 const app = express();
 const port = process.env.PORT || 8080
@@ -293,9 +296,27 @@ app.post('/', async (req, res) => {
             </html>
         `;
 
-    res.contentType('text/html');
+    // res.contentType('text/html');
 
-    res.send(fullHTML);
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.setContent(fullHTML);
+    const pdfBuffer = await page.pdf({ format: "A4" });
+    await browser.close();
+
+    const tmpFolderPath = "/tmp";
+    const pdfFilePath = path.join(tmpFolderPath, "labels.pdf");
+    fs.writeFileSync(pdfFilePath, pdfBuffer);
+
+    // Set the response headers
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=labels.pdf`);
+
+    // Send the PDF buffer
+    res.send(pdfFilePath);
+
+    // res.send(fullHTML);
 });
 
 app.listen(port, () => {

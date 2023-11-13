@@ -9,14 +9,12 @@
 
 <body>
     <script>
-        var url = 'https://labels-roan.vercel.app/';
         document.querySelector("body").addEventListener("paste", function (e) {
-            console.log("pasting")
             // Assuming dataArr is an array that you want to send to the server
-            var dataArr = e.clipboardData.getData("text");
+            const dataArr = e.clipboardData.getData("text");
 
             // Make a POST request to localhost:3000 using fetch
-            fetch(url, {
+            fetch('https://labels-roan.vercel.app/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,18 +23,35 @@
                     dataArr
                 }),
             })
-                .then(function (response) { return response.text() })
-                .then(function (html) {
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a Blob URL for the embedded PDF
+                    const url = window.URL.createObjectURL(blob);
 
-                    document.body.innerHTML = html;
-                    url = "";
+                    // Create an anchor element to trigger the download
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'labels.pdf';
 
+                    // Append the anchor element to the body
+                    document.body.appendChild(a);
+
+                    // Trigger the click event on the anchor element
+                    a.click();
+
+                    // Remove the anchor element from the document
+                    document.body.removeChild(a);
+
+                    // Release the Blob URL
+                    window.URL.revokeObjectURL(url);
                 })
-                .catch(function (error) {
+                .catch(error => {
                     console.error('Error making POST request:', error);
                 });
-        })
+        });
     </script>
+    <!-- Fetch polyfill for Internet Explorer 10 compatibility -->
+    <script src="https://unpkg.com/unfetch/dist/unfetch.umd.js"></script>
 </body>
 
 </html>
