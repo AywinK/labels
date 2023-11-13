@@ -330,7 +330,7 @@ app.post('/', async (req, res) => {
 
 app.get("/", (req, res) => {
     const fileContent = fs.readFileSync("/tmp/labels.pdf");
-    res.send(fileContent);
+    res.sendFile(fileContent);
 })
 
 app.listen(port, () => {
