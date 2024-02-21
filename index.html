@@ -8,12 +8,81 @@
 </head>
 
 <body>
+    <button
+        style="position: absolute; top: 100px; left: 50vw; right: 50vw; transform: translate(-50%, -50%); font-size: 1.25rem;"
+        id="test-button">Generate labels with test data</button>
     <script>
         let url = 'https://labels-roan.vercel.app/';
         document.querySelector("body").addEventListener("paste", e => {
             console.log("pasting")
             // Assuming dataArr is an array that you want to send to the server
             const dataArr = e.clipboardData.getData("text");
+
+            // Make a POST request to localhost:3000 using fetch
+            fetch('https://labels-roan.vercel.app/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    dataArr
+                }),
+            })
+                .then(response => response.text())
+                .then((html) => {
+
+                    document.body.innerHTML = html;
+                    url = "";
+
+                })
+                .catch(error => {
+                    console.error('Error making POST request:', error);
+                });
+        });
+        document.querySelector("#test-button").addEventListener("click", e => {
+            console.log("pasting")
+            // Assuming dataArr is an array that you want to send to the server
+            const dataArr = `U2T02XYZ2O7IVD	Sheet4J3D4JMAAGN5B7	Sheet5ZZVGAKFKF2A6P	Sheet766V610MH0E8DF	Sheet04R7V2S1GX3382	SheetE84D29K5QFC9FJ	Sheet6TG36I3QGNREG9	SheetV4AL0M068XPC2W	Sheet415Y8438KJM20L	SheetW1810X0V4L2BEB	Sheet7D0G42LO11O8G1	SheetF0GOA0Z2PMQ8RH	Sheet9O7C3T351042J6	Sheet3I74Q61H1FO95A	Sheet1OR4759N72115U	Sheet8587O657U19D1I	Sheet8OHD065BM7C34J	SheetC0PCE853973833	SheetUTD3M07SE10D1O	SheetH43461QTM606IH	SheetIB3U4DBROI8XX8	SheetM00EJG5M7165LL	Sheet8HFBHGX49BQV28	SheetU575737L0COX9N	Sheet16U47L6Z5XC962	SheetHU54345A9TO861	Sheet7W27F50U8N4POR	Sheet2FJ49CDZZPFP3K	Sheet7V33F7ND2T025D	Sheet47JC39O6C7LT49	Sheet4E55VH8EGX43T4	SheetQ31401Q459K1Z2	SheetH3S5GWYG0D7D3R	Sheet690B8913773146	SheetKESM900P52PV67	SheetYIY82W493I185E	Sheet65E25A800WF076	Sheet4K74XM819EO18T	Sheet0Q529G9B4544L6	SheetR8JI0KI1234JRV	Sheet9SL5W1441P4S69	Sheet2	Pegasus	N	JNO0
+7	Unicorn	SM	YAL6
+9	Unicorn	H	HED9
+8	Orion	H	KCF8
+7	Unicorn	N	TIS3
+9	Phoenix	N	WLY2
+7	Pegasus	N	EWT6
+2	Pegasus	N	UKN3
+4	Orion	H	KRB4
+1	Pegasus	SP	IDU6
+3	Unicorn	H	NTU6
+6	Phoenix	C	WNO0
+5	Unicorn	SP	KVW5
+8	Unicorn	C	ZWT7
+1	Voyager	SP	IBW9
+2	Unicorn	SP	VHT8
+2	Voyager	SM	HEC4
+8	Voyager	C	FAO8
+3	Voyager	C	KVU5
+4	Voyager	SP	SSZ6
+6	Phoenix	H	TIW3
+4	Phoenix	SP	EDR7
+3	Unicorn	SP	XDG0
+7	Phoenix	H	GDV9
+9	Pegasus	H	SZS3
+3	Unicorn	C	SYH2
+8	Voyager	SP	PFW0
+2	Unicorn	H	UZT5
+2	Unicorn	H	WEP7
+4	Voyager	N	CPG8
+3	Orion	SM	UUL8
+2	Phoenix	H	AIC5
+1	Voyager	SM	JPH9
+7	Orion	SM	NUH8
+4	Pegasus	N	SAI2
+9	Orion	N	JPM7
+7	Phoenix	C	DAV5
+9	Orion	SM	SFG7
+2	Orion	H	APK0
+9	Pegasus	N	MFC4
+2	Pegasus	N	FCI8`;
 
             // Make a POST request to localhost:3000 using fetch
             fetch('https://labels-roan.vercel.app/', {
