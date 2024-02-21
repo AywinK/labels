@@ -1,9 +1,6 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
 const cors = require("cors");
-const puppeteer = require("puppeteer");
 const fs = require("fs");
-const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 8080
